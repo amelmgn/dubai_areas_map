@@ -1,0 +1,59 @@
+<h2>Какая подложка под полигонами?</h2>
+<p class="subtitle">Кликни понравившийся вариант. У каждого свой компромисс по зависимостям.</p>
+
+<div class="cards">
+  <div class="card" data-choice="minimal" onclick="toggleSelect(this)">
+    <div class="card-image" style="padding:0;">
+      <svg viewBox="0 0 300 150" style="width:100%;display:block;">
+        <rect width="300" height="150" fill="#f4f1ea"/>
+        <polygon points="40,30 130,25 140,80 60,95" fill="#2563eb" fill-opacity="0.18" stroke="#9ca3af" stroke-width="1"/>
+        <polygon points="130,25 230,35 220,90 140,80" fill="#2563eb" fill-opacity="0.5" stroke="#1d4ed8" stroke-width="2"/>
+        <polygon points="60,95 140,80 150,135 70,140" fill="#2563eb" fill-opacity="0.18" stroke="#9ca3af" stroke-width="1"/>
+        <polygon points="230,35 280,45 275,100 220,90" fill="#2563eb" fill-opacity="0.18" stroke="#9ca3af" stroke-width="1"/>
+      </svg>
+    </div>
+    <div class="card-body">
+      <h3>A · Минимализм (без тайлов)</h3>
+      <p>Только полигоны на однотонном фоне. <b>Ноль внешних зависимостей</b>, мгновенная загрузка. Нет улиц/моря под ними.</p>
+    </div>
+  </div>
+
+  <div class="card" data-choice="light" onclick="toggleSelect(this)">
+    <div class="card-image" style="padding:0;">
+      <svg viewBox="0 0 300 150" style="width:100%;display:block;">
+        <rect width="300" height="150" fill="#e8eef3"/>
+        <path d="M0,60 L300,75" stroke="#cfd8e0" stroke-width="3"/>
+        <path d="M0,110 L300,120" stroke="#cfd8e0" stroke-width="3"/>
+        <path d="M120,0 L130,150" stroke="#cfd8e0" stroke-width="3"/>
+        <rect x="200" y="0" width="100" height="150" fill="#bcd9e8" fill-opacity="0.6"/>
+        <polygon points="40,30 130,25 140,80 60,95" fill="#2563eb" fill-opacity="0.18" stroke="#9ca3af" stroke-width="1"/>
+        <polygon points="130,25 230,35 220,90 140,80" fill="#2563eb" fill-opacity="0.5" stroke="#1d4ed8" stroke-width="2"/>
+        <polygon points="60,95 140,80 150,135 70,140" fill="#2563eb" fill-opacity="0.18" stroke="#9ca3af" stroke-width="1"/>
+      </svg>
+    </div>
+    <div class="card-body">
+      <h3>B · Светлая карта улиц</h3>
+      <p>Подложка со улицами/морем (Carto Positron / OSM, бесплатно). Видно контекст города. Зависимость от тайл-сервера + атрибуция.</p>
+    </div>
+  </div>
+
+  <div class="card" data-choice="dark" onclick="toggleSelect(this)">
+    <div class="card-image" style="padding:0;">
+      <svg viewBox="0 0 300 150" style="width:100%;display:block;">
+        <rect width="300" height="150" fill="#1a1f29"/>
+        <path d="M0,60 L300,75" stroke="#2c333f" stroke-width="3"/>
+        <path d="M120,0 L130,150" stroke="#2c333f" stroke-width="3"/>
+        <rect x="200" y="0" width="100" height="150" fill="#14242e" fill-opacity="0.8"/>
+        <polygon points="40,30 130,25 140,80 60,95" fill="#38bdf8" fill-opacity="0.18" stroke="#64748b" stroke-width="1"/>
+        <polygon points="130,25 230,35 220,90 140,80" fill="#38bdf8" fill-opacity="0.55" stroke="#7dd3fc" stroke-width="2"/>
+        <polygon points="60,95 140,80 150,135 70,140" fill="#38bdf8" fill-opacity="0.18" stroke="#64748b" stroke-width="1"/>
+      </svg>
+    </div>
+    <div class="card-body">
+      <h3>C · Тёмная карта</h3>
+      <p>Тёмная подложка (Carto Dark Matter), полигоны светятся. Эффектно для дашборда. Та же зависимость от тайлов + атрибуция.</p>
+    </div>
+  </div>
+</div>
+
+<p class="subtitle">Какой вариант ближе? Можешь и комбинировать (напр. светлая + переключатель на тёмную).</p>

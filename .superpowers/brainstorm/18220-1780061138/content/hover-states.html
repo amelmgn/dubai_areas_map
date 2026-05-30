@@ -1,0 +1,60 @@
+<h2>Поведение полигонов: по умолчанию vs наведение</h2>
+<p class="subtitle">Так я понял твоё описание. Подтверди или поправь.</p>
+
+<div class="split">
+  <div class="mockup">
+    <div class="mockup-header">Состояние по умолчанию</div>
+    <div class="mockup-body" style="background:#eef2f5;padding:0;">
+      <svg viewBox="0 0 360 240" style="width:100%;display:block;">
+        <rect x="0" y="0" width="360" height="240" fill="#e8edf1"/>
+        <!-- polygons: thin border + faint semi-transparent fill, no labels -->
+        <polygon points="30,40 120,30 140,110 60,130" fill="#3b82f6" fill-opacity="0.12" stroke="#94a3b8" stroke-width="1"/>
+        <polygon points="120,30 230,45 220,120 140,110" fill="#3b82f6" fill-opacity="0.12" stroke="#94a3b8" stroke-width="1"/>
+        <polygon points="230,45 330,60 320,140 220,120" fill="#3b82f6" fill-opacity="0.12" stroke="#94a3b8" stroke-width="1"/>
+        <polygon points="60,130 140,110 150,200 70,210" fill="#3b82f6" fill-opacity="0.12" stroke="#94a3b8" stroke-width="1"/>
+        <polygon points="140,110 220,120 230,205 150,200" fill="#3b82f6" fill-opacity="0.12" stroke="#94a3b8" stroke-width="1"/>
+        <polygon points="220,120 320,140 315,210 230,205" fill="#3b82f6" fill-opacity="0.12" stroke="#94a3b8" stroke-width="1"/>
+      </svg>
+    </div>
+  </div>
+  <div class="mockup">
+    <div class="mockup-header">При наведении на коммьюнити</div>
+    <div class="mockup-body" style="background:#eef2f5;padding:0;">
+      <svg viewBox="0 0 360 240" style="width:100%;display:block;">
+        <rect x="0" y="0" width="360" height="240" fill="#e8edf1"/>
+        <polygon points="30,40 120,30 140,110 60,130" fill="#3b82f6" fill-opacity="0.12" stroke="#94a3b8" stroke-width="1"/>
+        <polygon points="230,45 330,60 320,140 220,120" fill="#3b82f6" fill-opacity="0.12" stroke="#94a3b8" stroke-width="1"/>
+        <polygon points="60,130 140,110 150,200 70,210" fill="#3b82f6" fill-opacity="0.12" stroke="#94a3b8" stroke-width="1"/>
+        <polygon points="220,120 320,140 315,210 230,205" fill="#3b82f6" fill-opacity="0.12" stroke="#94a3b8" stroke-width="1"/>
+        <polygon points="140,110 220,120 230,205 150,200" fill="#3b82f6" fill-opacity="0.12" stroke="#94a3b8" stroke-width="1"/>
+        <!-- hovered polygon: saturated fill + bold border + label -->
+        <polygon points="120,30 230,45 220,120 140,110" fill="#2563eb" fill-opacity="0.55" stroke="#1d4ed8" stroke-width="2.5"/>
+        <rect x="150" y="62" width="78" height="22" rx="4" fill="#0f172a" fill-opacity="0.85"/>
+        <text x="189" y="77" fill="#fff" font-size="12" text-anchor="middle" font-family="sans-serif">Al Barsha</text>
+      </svg>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="pros-cons">
+    <div class="pros">
+      <h4>По умолчанию</h4>
+      <ul>
+        <li>Лёгкая полупрозрачная заливка у всех полигонов</li>
+        <li>Тонкие контуры</li>
+        <li>Названия НЕ показаны (чтобы не было каши)</li>
+      </ul>
+    </div>
+    <div class="cons">
+      <h4>При наведении</h4>
+      <ul>
+        <li>Заливка становится насыщенной</li>
+        <li>Контур толще и ярче</li>
+        <li>Появляется название коммьюнити</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<p class="subtitle">Похоже на то, что ты хочешь? Ответь в терминале.</p>

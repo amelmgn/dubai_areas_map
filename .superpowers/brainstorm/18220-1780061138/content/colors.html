@@ -1,0 +1,60 @@
+<h2>Цвет заливки полигонов</h2>
+<p class="subtitle">227 коммьюнити — слишком много для уникальных цветов каждому. Но варианты есть.</p>
+
+<div class="cards">
+  <div class="card" data-choice="single" onclick="toggleSelect(this)">
+    <div class="card-image" style="padding:0;">
+      <svg viewBox="0 0 300 150" style="width:100%;display:block;">
+        <rect width="300" height="150" fill="#e8eef3"/>
+        <polygon points="20,20 100,15 110,70 35,80" fill="#2563eb" fill-opacity="0.2" stroke="#9ca3af"/>
+        <polygon points="100,15 190,22 185,75 110,70" fill="#2563eb" fill-opacity="0.2" stroke="#9ca3af"/>
+        <polygon points="190,22 280,30 275,80 185,75" fill="#2563eb" fill-opacity="0.2" stroke="#9ca3af"/>
+        <polygon points="35,80 110,70 120,135 45,140" fill="#2563eb" fill-opacity="0.2" stroke="#9ca3af"/>
+        <polygon points="110,70 185,75 190,135 120,135" fill="#2563eb" fill-opacity="0.55" stroke="#1d4ed8" stroke-width="2"/>
+        <polygon points="185,75 275,80 270,140 190,135" fill="#2563eb" fill-opacity="0.2" stroke="#9ca3af"/>
+      </svg>
+    </div>
+    <div class="card-body">
+      <h3>A · Один акцентный цвет</h3>
+      <p>Все полигоны одного цвета, при наведении тот же цвет насыщается. Спокойно, единообразно, легко читается.</p>
+    </div>
+  </div>
+
+  <div class="card" data-choice="by-sector" onclick="toggleSelect(this)">
+    <div class="card-image" style="padding:0;">
+      <svg viewBox="0 0 300 150" style="width:100%;display:block;">
+        <rect width="300" height="150" fill="#e8eef3"/>
+        <polygon points="20,20 100,15 110,70 35,80" fill="#2563eb" fill-opacity="0.22" stroke="#9ca3af"/>
+        <polygon points="100,15 190,22 185,75 110,70" fill="#16a34a" fill-opacity="0.22" stroke="#9ca3af"/>
+        <polygon points="190,22 280,30 275,80 185,75" fill="#ea580c" fill-opacity="0.22" stroke="#9ca3af"/>
+        <polygon points="35,80 110,70 120,135 45,140" fill="#9333ea" fill-opacity="0.22" stroke="#9ca3af"/>
+        <polygon points="110,70 185,75 190,135 120,135" fill="#16a34a" fill-opacity="0.6" stroke="#15803d" stroke-width="2"/>
+        <polygon points="185,75 275,80 270,140 190,135" fill="#0891b2" fill-opacity="0.22" stroke="#9ca3af"/>
+      </svg>
+    </div>
+    <div class="card-body">
+      <h3>B · Цвет по сектору</h3>
+      <p>Коммьюнити окрашиваются в цвет своего сектора (9 цветов). Видно принадлежность зон. Нужно вычислить, какой коммьюнити в каком секторе (пространственно).</p>
+    </div>
+  </div>
+
+  <div class="card" data-choice="palette" onclick="toggleSelect(this)">
+    <div class="card-image" style="padding:0;">
+      <svg viewBox="0 0 300 150" style="width:100%;display:block;">
+        <rect width="300" height="150" fill="#e8eef3"/>
+        <polygon points="20,20 100,15 110,70 35,80" fill="#60a5fa" fill-opacity="0.3" stroke="#9ca3af"/>
+        <polygon points="100,15 190,22 185,75 110,70" fill="#f472b6" fill-opacity="0.3" stroke="#9ca3af"/>
+        <polygon points="190,22 280,30 275,80 185,75" fill="#34d399" fill-opacity="0.3" stroke="#9ca3af"/>
+        <polygon points="35,80 110,70 120,135 45,140" fill="#fbbf24" fill-opacity="0.3" stroke="#9ca3af"/>
+        <polygon points="110,70 185,75 190,135 120,135" fill="#a78bfa" fill-opacity="0.65" stroke="#7c3aed" stroke-width="2"/>
+        <polygon points="185,75 275,80 270,140 190,135" fill="#fb923c" fill-opacity="0.3" stroke="#9ca3af"/>
+      </svg>
+    </div>
+    <div class="card-body">
+      <h3>C · Пёстрая палитра</h3>
+      <p>Каждому полигону мягкий цвет из палитры (по кругу). Живо и нарядно, но без смысловой нагрузки.</p>
+    </div>
+  </div>
+</div>
+
+<p class="subtitle">Что выбираешь? Ответь в терминале.</p>
