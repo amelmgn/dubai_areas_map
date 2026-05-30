@@ -1,0 +1,14 @@
+{
+  "name": "dubai-areas-map",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node scripts/enrich.mjs",
+    "test": "node --test",
+    "serve": "python3 -m http.server 8080 --directory public"
+  },
+  "devDependencies": {
+    "@turf/turf": "^7.1.0"
+  }
+}
