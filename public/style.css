@@ -1,0 +1,44 @@
+* { box-sizing: border-box; }
+html, body { margin: 0; height: 100%; font-family: system-ui, -apple-system, "Segoe UI", sans-serif; }
+#map { position: absolute; inset: 0; }
+
+#search-box {
+  position: absolute; top: 12px; left: 12px; z-index: 2; width: 280px;
+}
+#search-input {
+  width: 100%; padding: 10px 12px; border: 1px solid #cbd5e1; border-radius: 8px;
+  font-size: 14px; box-shadow: 0 2px 8px rgba(0,0,0,.12); background: #fff;
+}
+#search-results {
+  list-style: none; margin: 4px 0 0; padding: 4px; background: #fff;
+  border: 1px solid #e2e8f0; border-radius: 8px; box-shadow: 0 4px 16px rgba(0,0,0,.14);
+  max-height: 320px; overflow-y: auto;
+}
+#search-results li {
+  padding: 8px 10px; border-radius: 6px; cursor: pointer; font-size: 14px;
+  display: flex; justify-content: space-between; gap: 8px;
+}
+#search-results li:hover { background: #f1f5f9; }
+#search-results .lvl { color: #94a3b8; font-size: 12px; text-transform: capitalize; }
+
+#theme-toggle {
+  position: absolute; top: 12px; right: 12px; z-index: 2;
+  width: 40px; height: 40px; border: none; border-radius: 8px; cursor: pointer;
+  font-size: 18px; background: #fff; box-shadow: 0 2px 8px rgba(0,0,0,.12);
+}
+
+#legend {
+  position: absolute; bottom: 24px; right: 12px; z-index: 2;
+  background: rgba(255,255,255,.94); border-radius: 8px; padding: 10px 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,.12); font-size: 12px; max-width: 180px;
+}
+.legend-title { font-weight: 600; margin-bottom: 6px; }
+#legend-list { list-style: none; margin: 0; padding: 0; }
+#legend-list li { display: flex; align-items: center; gap: 8px; margin: 3px 0; }
+#legend-list .swatch { width: 14px; height: 14px; border-radius: 3px; flex: none; }
+
+body.dark #search-input { background: #1e293b; color: #e2e8f0; border-color: #334155; }
+body.dark #search-results { background: #1e293b; border-color: #334155; color: #e2e8f0; }
+body.dark #search-results li:hover { background: #334155; }
+body.dark #theme-toggle { background: #1e293b; color: #e2e8f0; }
+body.dark #legend { background: rgba(15,23,42,.92); color: #e2e8f0; }

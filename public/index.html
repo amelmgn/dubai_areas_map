@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Dubai Areas Map</title>
+  <link rel="stylesheet" href="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="map"></div>
+
+  <div id="search-box">
+    <input id="search-input" type="text" placeholder="Поиск района или коммьюнити…" autocomplete="off">
+    <ul id="search-results" hidden></ul>
+  </div>
+
+  <button id="theme-toggle" title="Сменить тему">🌙</button>
+
+  <div id="legend">
+    <div class="legend-title">Секторы</div>
+    <ul id="legend-list"></ul>
+  </div>
+
+  <script src="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.js"></script>
+  <script type="module" src="app.js"></script>
+</body>
+</html>
