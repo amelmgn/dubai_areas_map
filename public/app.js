@@ -198,9 +198,39 @@ const map = new maplibregl.Map({
 });
 map.addControl(new maplibregl.NavigationControl(), 'bottom-left');
 
+function wireSearch() {
+  const input = document.getElementById('search-input');
+  const list = document.getElementById('search-results');
+
+  function render(results) {
+    if (!results.length) { list.hidden = true; list.innerHTML = ''; return; }
+    list.innerHTML = results
+      .map((r, i) => `<li data-i="${i}"><span>${r.name}</span><span class="lvl">${r.level}</span></li>`)
+      .join('');
+    list.hidden = false;
+    Array.from(list.children).forEach((li, i) => {
+      li.addEventListener('click', () => {
+        const r = results[i];
+        const bbox = typeof r.bbox === 'string' ? JSON.parse(r.bbox) : r.bbox;
+        flyToBbox(bbox);
+        setHover(r.source, r.id); // временная подсветка выбранного (та же механика, что и hover)
+        input.value = r.name;
+        list.hidden = true;
+      });
+    });
+  }
+
+  input.addEventListener('input', () => render(searchFilter(searchIndex, input.value)));
+  input.addEventListener('focus', () => { if (input.value) render(searchFilter(searchIndex, input.value)); });
+  document.addEventListener('click', (e) => {
+    if (!document.getElementById('search-box').contains(e.target)) list.hidden = true;
+  });
+}
+
 async function init() {
   data = await loadData();
   searchIndex = buildSearchIndex(data);
+  wireSearch();
   map.setStyle(buildStyle(currentTheme));
   map.once('style.load', onStyleReady);
 }
