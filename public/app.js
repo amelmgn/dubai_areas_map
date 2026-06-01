@@ -79,7 +79,7 @@ function labelLayer(lvl, t) {
       'text-color': t.text,
       'text-halo-color': t.halo,
       'text-halo-width': 1.2,
-      'text-opacity': 0.25, // подписи по умолчанию едва видны; яркая подпись наведения — в Task 7
+      'text-opacity': 1.0, // подписи всегда видимы; наведённая дополнительно крупнее (см. hoverLabelLayer)
     },
   };
 }
