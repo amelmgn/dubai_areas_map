@@ -243,7 +243,9 @@ async function init() {
   searchIndex = buildSearchIndex(data);
   buildLegend();
   wireSearch();
-  map.setStyle(buildStyle(currentTheme));
+  // diff:false форсирует полную перезагрузку стиля, иначе style.load не сработает
+  // повторно после setStyle на уже загруженной карте (MapLibre диффит стиль).
+  map.setStyle(buildStyle(currentTheme), { diff: false });
   map.once('style.load', onStyleReady);
 }
 
@@ -255,7 +257,9 @@ document.getElementById('theme-toggle').addEventListener('click', () => {
   currentTheme = currentTheme === 'light' ? 'dark' : 'light';
   document.body.classList.toggle('dark', currentTheme === 'dark');
   document.getElementById('theme-toggle').textContent = currentTheme === 'light' ? '🌙' : '☀️';
-  map.setStyle(buildStyle(currentTheme));
+  // diff:false форсирует полную перезагрузку стиля, иначе style.load не сработает
+  // повторно после setStyle на уже загруженной карте (MapLibre диффит стиль).
+  map.setStyle(buildStyle(currentTheme), { diff: false });
   map.once('style.load', onStyleReady);
 });
 
