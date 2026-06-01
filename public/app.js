@@ -205,7 +205,7 @@ function wireSearch() {
   function render(results) {
     if (!results.length) { list.hidden = true; list.innerHTML = ''; return; }
     list.innerHTML = results
-      .map((r, i) => `<li data-i="${i}"><span>${r.name}</span><span class="lvl">${r.level}</span></li>`)
+      .map((r) => `<li><span>${r.name}</span><span class="lvl">${r.level}</span></li>`)
       .join('');
     list.hidden = false;
     Array.from(list.children).forEach((li, i) => {
