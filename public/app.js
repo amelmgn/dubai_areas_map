@@ -112,7 +112,23 @@ function addDataLayers() {
     map.addLayer(hoverLabelLayer(lvl, t));
   }
   // события вешаем один раз: addDataLayers вызывается на каждый style.load (в т.ч. при смене темы)
-  if (!eventsWired) { wireHover(); eventsWired = true; }
+  if (!eventsWired) { wireHover(); wireClick(); eventsWired = true; }
+}
+
+function flyToBbox(bbox) {
+  map.fitBounds([[bbox[0], bbox[1]], [bbox[2], bbox[3]]], { padding: 60, duration: 800 });
+}
+
+function wireClick() {
+  for (const lvl of LEVELS) {
+    map.on('click', `${lvl.id}-fill`, (e) => {
+      if (!e.features.length) return;
+      const bbox = e.features[0].properties.bbox;
+      // в событиях MapLibre вложенные свойства могут приходить строкой — подстрахуемся
+      const parsed = typeof bbox === 'string' ? JSON.parse(bbox) : bbox;
+      flyToBbox(parsed);
+    });
+  }
 }
 
 let hovered = null; // {source, id}
