@@ -227,9 +227,21 @@ function wireSearch() {
   });
 }
 
+function buildLegend() {
+  const list = document.getElementById('legend-list');
+  // slug → name из секторов
+  const names = {};
+  for (const f of data.sectors.features) names[f.properties.slug] = f.properties.name;
+  list.innerHTML = Object.entries(SECTOR_PALETTE)
+    .map(([slug, color]) =>
+      `<li><span class="swatch" style="background:${color}"></span>${names[slug] || slug}</li>`)
+    .join('');
+}
+
 async function init() {
   data = await loadData();
   searchIndex = buildSearchIndex(data);
+  buildLegend();
   wireSearch();
   map.setStyle(buildStyle(currentTheme));
   map.once('style.load', onStyleReady);
