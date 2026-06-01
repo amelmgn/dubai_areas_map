@@ -4,8 +4,8 @@ const DUBAI_CENTER = [55.27, 25.20];
 const DUBAI_ZOOM = 9.5;
 
 const LEVELS = [
-  { id: 'sectors',     source: 'sectors',     minzoom: 0,  maxzoom: 11 },
-  { id: 'districts',   source: 'districts',   minzoom: 11, maxzoom: 13 },
+  { id: 'sectors',     source: 'sectors',     minzoom: 0,  maxzoom: 10 },
+  { id: 'districts',   source: 'districts',   minzoom: 10, maxzoom: 13 },
   { id: 'communities', source: 'communities', minzoom: 13, maxzoom: 24 },
 ];
 
