@@ -198,6 +198,16 @@ const map = new maplibregl.Map({
 });
 map.addControl(new maplibregl.NavigationControl(), 'bottom-left');
 
+// Индикатор зума (для отладки порогов уровней)
+function updateZoomIndicator() {
+  const z = map.getZoom();
+  const lvl = LEVELS.find((l) => z >= l.minzoom && z < l.maxzoom);
+  document.getElementById('zoom-indicator').textContent =
+    `z ${z.toFixed(2)} · ${lvl ? lvl.id : '—'}`;
+}
+map.on('zoom', updateZoomIndicator);
+map.on('load', updateZoomIndicator);
+
 function wireSearch() {
   const input = document.getElementById('search-input');
   const list = document.getElementById('search-results');
