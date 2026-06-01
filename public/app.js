@@ -166,7 +166,7 @@ function buildStyle(theme) {
   const t = THEMES[theme];
   return {
     version: 8,
-    glyphs: 'https://fonts.openmaptiles.org/{fontstack}/{range}.pbf',
+    glyphs: 'glyphs/{fontstack}/{range}.pbf', // self-hosted, без зависимости от внешнего CDN
     sources: {
       basemap: { type: 'raster', tiles: [t.raster], tileSize: 256,
         attribution: '© OpenStreetMap contributors © CARTO' },
