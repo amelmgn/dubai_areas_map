@@ -44,6 +44,55 @@ function labelPoints(collection) {
   };
 }
 
+function fillLayer(lvl) {
+  return {
+    id: `${lvl.id}-fill`, type: 'fill', source: lvl.source,
+    minzoom: lvl.minzoom, maxzoom: lvl.maxzoom,
+    paint: {
+      'fill-color': fillColorExpr(),
+      'fill-opacity': ['case', ['boolean', ['feature-state', 'hover'], false], 0.55, 0.18],
+    },
+  };
+}
+
+function lineLayer(lvl, t) {
+  return {
+    id: `${lvl.id}-line`, type: 'line', source: lvl.source,
+    minzoom: lvl.minzoom, maxzoom: lvl.maxzoom,
+    paint: {
+      'line-color': ['case', ['boolean', ['feature-state', 'hover'], false], t.lineHover, t.line],
+      'line-width': ['case', ['boolean', ['feature-state', 'hover'], false], 2.5, 0.8],
+    },
+  };
+}
+
+function labelLayer(lvl, t) {
+  return {
+    id: `${lvl.id}-label`, type: 'symbol', source: `${lvl.id}-pts`,
+    minzoom: lvl.minzoom, maxzoom: lvl.maxzoom,
+    layout: {
+      'text-field': ['get', 'name'],
+      'text-font': ['Open Sans Regular'],
+      'text-size': 12,
+    },
+    paint: {
+      'text-color': t.text,
+      'text-halo-color': t.halo,
+      'text-halo-width': 1.2,
+      'text-opacity': 0.25, // подписи по умолчанию едва видны; яркая подпись наведения — в Task 7
+    },
+  };
+}
+
+function addDataLayers() {
+  const t = THEMES[currentTheme];
+  for (const lvl of LEVELS) {
+    map.addLayer(fillLayer(lvl));
+    map.addLayer(lineLayer(lvl, t));
+    map.addLayer(labelLayer(lvl, t));
+  }
+}
+
 function buildStyle(theme) {
   const t = THEMES[theme];
   return {
@@ -88,7 +137,7 @@ async function init() {
 }
 
 function onStyleReady() {
-  // Слои данных и события добавляются здесь (Task 6+).
+  addDataLayers();
 }
 
 document.getElementById('theme-toggle').addEventListener('click', () => {
