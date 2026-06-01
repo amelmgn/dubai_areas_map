@@ -84,12 +84,65 @@ function labelLayer(lvl, t) {
   };
 }
 
+function hoverLabelLayer(lvl, t) {
+  return {
+    id: `${lvl.id}-label-hover`, type: 'symbol', source: `${lvl.id}-pts`,
+    minzoom: lvl.minzoom, maxzoom: lvl.maxzoom,
+    filter: ['==', ['id'], -1], // ничего, пока не наведено
+    layout: {
+      'text-field': ['get', 'name'],
+      'text-font': ['Open Sans Regular'],
+      'text-size': 13,
+    },
+    paint: {
+      'text-color': t.text,
+      'text-halo-color': t.halo,
+      'text-halo-width': 1.6,
+      'text-opacity': 1.0,
+    },
+  };
+}
+
 function addDataLayers() {
   const t = THEMES[currentTheme];
   for (const lvl of LEVELS) {
     map.addLayer(fillLayer(lvl));
     map.addLayer(lineLayer(lvl, t));
     map.addLayer(labelLayer(lvl, t));
+    map.addLayer(hoverLabelLayer(lvl, t));
+  }
+  // события вешаем один раз: addDataLayers вызывается на каждый style.load (в т.ч. при смене темы)
+  if (!eventsWired) { wireHover(); eventsWired = true; }
+}
+
+let hovered = null; // {source, id}
+
+function setHover(source, id) {
+  clearHover();
+  hovered = { source, id };
+  map.setFeatureState({ source, id }, { hover: true });
+  map.setFilter(`${source}-label-hover`, ['==', ['id'], id]);
+  map.getCanvas().style.cursor = 'pointer';
+}
+
+function clearHover() {
+  if (!hovered) return;
+  map.setFeatureState({ source: hovered.source, id: hovered.id }, { hover: false });
+  map.setFilter(`${hovered.source}-label-hover`, ['==', ['id'], -1]);
+  map.getCanvas().style.cursor = '';
+  hovered = null;
+}
+
+function wireHover() {
+  for (const lvl of LEVELS) {
+    const fillId = `${lvl.id}-fill`;
+    map.on('mousemove', fillId, (e) => {
+      if (!e.features.length) return;
+      const id = e.features[0].id;
+      if (hovered && hovered.source === lvl.source && hovered.id === id) return;
+      setHover(lvl.source, id); // lvl.id === lvl.source
+    });
+    map.on('mouseleave', fillId, () => clearHover());
   }
 }
 
