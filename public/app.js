@@ -11,11 +11,12 @@ const LEVELS = [
 
 const THEMES = {
   light: {
-    raster: 'https://a.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png',
+    // минималистичная векторная подложка Carto (без API-ключа)
+    basemap: 'https://basemaps.cartocdn.com/gl/positron-gl-style/style.json',
     line: '#64748b', lineHover: '#1d4ed8', text: '#1e293b', halo: '#ffffff',
   },
   dark: {
-    raster: 'https://a.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png',
+    basemap: 'https://basemaps.cartocdn.com/gl/dark-matter-gl-style/style.json',
     line: '#475569', lineHover: '#7dd3fc', text: '#e2e8f0', halo: '#0f172a',
   },
 };
@@ -162,23 +163,22 @@ function wireHover() {
   }
 }
 
-function buildStyle(theme) {
+async function buildStyle(theme) {
   const t = THEMES[theme];
-  return {
-    version: 8,
-    glyphs: 'glyphs/{fontstack}/{range}.pbf', // self-hosted, без зависимости от внешнего CDN
-    sources: {
-      basemap: { type: 'raster', tiles: [t.raster], tileSize: 256,
-        attribution: '© OpenStreetMap contributors © CARTO' },
-      sectors:     { type: 'geojson', data: data.sectors },
-      districts:   { type: 'geojson', data: data.districts },
-      communities: { type: 'geojson', data: data.communities },
-      'sectors-pts':     { type: 'geojson', data: labelPoints(data.sectors) },
-      'districts-pts':   { type: 'geojson', data: labelPoints(data.districts) },
-      'communities-pts': { type: 'geojson', data: labelPoints(data.communities) },
-    },
-    layers: [{ id: 'basemap', type: 'raster', source: 'basemap' }],
-  };
+  // Берём готовый минималистичный векторный стиль Carto как подложку и
+  // вмерживаем в него наши источники. Наши слои добавляются поверх в addDataLayers.
+  // glyphs/sprite остаются от Carto — их font-endpoint отдаёт в т.ч. Open Sans Regular,
+  // которым подписаны наши области, поэтому подписи рендерятся (см. glyph-ловушку).
+  const style = await fetch(t.basemap).then((r) => r.json());
+  Object.assign(style.sources, {
+    sectors:     { type: 'geojson', data: data.sectors },
+    districts:   { type: 'geojson', data: data.districts },
+    communities: { type: 'geojson', data: data.communities },
+    'sectors-pts':     { type: 'geojson', data: labelPoints(data.sectors) },
+    'districts-pts':   { type: 'geojson', data: labelPoints(data.districts) },
+    'communities-pts': { type: 'geojson', data: labelPoints(data.communities) },
+  });
+  return style;
 }
 
 async function loadData() {
@@ -253,9 +253,13 @@ async function init() {
   searchIndex = buildSearchIndex(data);
   buildLegend();
   wireSearch();
-  // diff:false форсирует полную перезагрузку стиля, иначе style.load не сработает
-  // повторно после setStyle на уже загруженной карте (MapLibre диффит стиль).
-  map.setStyle(buildStyle(currentTheme), { diff: false });
+  await applyStyle();
+}
+
+// diff:false форсирует полную перезагрузку стиля, иначе style.load не сработает
+// повторно после setStyle на уже загруженной карте (MapLibre диффит стиль).
+async function applyStyle() {
+  map.setStyle(await buildStyle(currentTheme), { diff: false });
   map.once('style.load', onStyleReady);
 }
 
@@ -267,10 +271,7 @@ document.getElementById('theme-toggle').addEventListener('click', () => {
   currentTheme = currentTheme === 'light' ? 'dark' : 'light';
   document.body.classList.toggle('dark', currentTheme === 'dark');
   document.getElementById('theme-toggle').textContent = currentTheme === 'light' ? '🌙' : '☀️';
-  // diff:false форсирует полную перезагрузку стиля, иначе style.load не сработает
-  // повторно после setStyle на уже загруженной карте (MapLibre диффит стиль).
-  map.setStyle(buildStyle(currentTheme), { diff: false });
-  map.once('style.load', onStyleReady);
+  applyStyle();
 });
 
 init();
