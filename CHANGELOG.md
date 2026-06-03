@@ -5,6 +5,18 @@ All notable changes to this project are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/).
 
+## [1.2.0] — 2026-06-03
+
+### Changed
+- Level switching (sectors / districts / communities) is now **manual** via a
+  segmented toggle at the top center, replacing the automatic zoom-based handoff.
+  The selected level is shown at every zoom until the user switches it. The default
+  level on load is **communities** ("Локации").
+- Selecting a search result now switches the active level to that result's level, so
+  the matched area is highlighted on a visible layer rather than a hidden one.
+- The zoom indicator now shows the active level label (e.g. `z 12.34 · Локации`)
+  instead of deriving the level from zoom thresholds.
+
 ## [1.1.0] — 2026-06-02
 
 ### Changed
