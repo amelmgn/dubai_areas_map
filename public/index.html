@@ -10,6 +10,12 @@
 <body>
   <div id="map"></div>
 
+  <div id="level-toggle" role="group" aria-label="Уровень детализации">
+    <button type="button" data-level="sectors">Секторы</button>
+    <button type="button" data-level="districts">Дистрикты</button>
+    <button type="button" data-level="communities" class="active">Локации</button>
+  </div>
+
   <div id="search-box">
     <input id="search-input" type="text" placeholder="Поиск района или коммьюнити…" autocomplete="off">
     <ul id="search-results" hidden></ul>
