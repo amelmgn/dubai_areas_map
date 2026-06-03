@@ -214,7 +214,7 @@ const map = new maplibregl.Map({
 });
 map.addControl(new maplibregl.NavigationControl(), 'bottom-left');
 
-// Индикатор зума (для отладки порогов уровней)
+// Индикатор зума и активного уровня
 function updateZoomIndicator() {
   const z = map.getZoom();
   document.getElementById('zoom-indicator').textContent =
