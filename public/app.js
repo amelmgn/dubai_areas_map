@@ -117,6 +117,7 @@ function addDataLayers() {
 }
 
 function setActiveLevel(id) {
+  if (!map.getLayer(`${LEVELS[0].id}-fill`)) return; // слои ещё не добавлены (ранний клик до style.load)
   activeLevel = id;
   for (const lvl of LEVELS) {
     const vis = lvl.id === id ? 'visible' : 'none';
