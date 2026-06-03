@@ -56,3 +56,21 @@ test('searchFilter: уважает limit', () => {
   const idx = buildSearchIndex(data);
   assert.equal(searchFilter(idx, 'a', 1).length, 1);
 });
+
+import { LEVEL_LABELS, levelLabel } from '../public/helpers.js';
+
+test('LEVEL_LABELS: три уровня с русскими подписями', () => {
+  assert.deepEqual(LEVEL_LABELS, {
+    sectors: 'Секторы',
+    districts: 'Дистрикты',
+    communities: 'Локации',
+  });
+});
+
+test('levelLabel: известный id → подпись', () => {
+  assert.equal(levelLabel('communities'), 'Локации');
+});
+
+test('levelLabel: неизвестный id → сам id', () => {
+  assert.equal(levelLabel('xxx'), 'xxx');
+});

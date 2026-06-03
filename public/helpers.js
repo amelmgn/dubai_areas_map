@@ -12,6 +12,16 @@ export const SECTOR_PALETTE = {
 
 export const NULL_SECTOR_COLOR = '#9ca3af';
 
+export const LEVEL_LABELS = {
+  sectors: 'Секторы',
+  districts: 'Дистрикты',
+  communities: 'Локации',
+};
+
+export function levelLabel(id) {
+  return LEVEL_LABELS[id] || id;
+}
+
 export function sectorColor(slug) {
   return SECTOR_PALETTE[slug] || NULL_SECTOR_COLOR;
 }
