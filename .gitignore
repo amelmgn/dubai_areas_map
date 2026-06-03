@@ -1,5 +1,7 @@
 node_modules/
 .superpowers/
 .DS_Store
+.claude
 public/data/*
 !public/data/.gitkeep
+claude.md
