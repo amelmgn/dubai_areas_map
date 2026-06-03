@@ -1,13 +1,15 @@
-import { SECTOR_PALETTE, NULL_SECTOR_COLOR, buildSearchIndex, searchFilter } from './helpers.js';
+import { SECTOR_PALETTE, NULL_SECTOR_COLOR, buildSearchIndex, searchFilter, levelLabel } from './helpers.js';
 
 const DUBAI_CENTER = [55.27, 25.20];
 const DUBAI_ZOOM = 9.5;
 
 const LEVELS = [
-  { id: 'sectors',     source: 'sectors',     minzoom: 0,  maxzoom: 10 },
-  { id: 'districts',   source: 'districts',   minzoom: 10, maxzoom: 12 },
-  { id: 'communities', source: 'communities', minzoom: 12, maxzoom: 24 },
+  { id: 'sectors',     source: 'sectors' },
+  { id: 'districts',   source: 'districts' },
+  { id: 'communities', source: 'communities' },
 ];
+
+const DEFAULT_LEVEL = 'communities';
 
 const THEMES = {
   light: {
@@ -25,6 +27,7 @@ let currentTheme = 'light';
 let data = null;          // {sectors, districts, communities}
 let searchIndex = [];
 let eventsWired = false;  // hover/click вешаем один раз (addDataLayers зовётся на каждый style.load)
+let activeLevel = DEFAULT_LEVEL; // какой уровень показываем (переключатель, не зум)
 
 function fillColorExpr() {
   const expr = ['match', ['get', 'sector']];
@@ -48,7 +51,6 @@ function labelPoints(collection) {
 function fillLayer(lvl) {
   return {
     id: `${lvl.id}-fill`, type: 'fill', source: lvl.source,
-    minzoom: lvl.minzoom, maxzoom: lvl.maxzoom,
     paint: {
       'fill-color': fillColorExpr(),
       'fill-opacity': ['case', ['boolean', ['feature-state', 'hover'], false], 0.55, 0.18],
@@ -59,7 +61,6 @@ function fillLayer(lvl) {
 function lineLayer(lvl, t) {
   return {
     id: `${lvl.id}-line`, type: 'line', source: lvl.source,
-    minzoom: lvl.minzoom, maxzoom: lvl.maxzoom,
     paint: {
       'line-color': ['case', ['boolean', ['feature-state', 'hover'], false], t.lineHover, t.line],
       'line-width': ['case', ['boolean', ['feature-state', 'hover'], false], 2.5, 0.8],
@@ -70,7 +71,6 @@ function lineLayer(lvl, t) {
 function labelLayer(lvl, t) {
   return {
     id: `${lvl.id}-label`, type: 'symbol', source: `${lvl.id}-pts`,
-    minzoom: lvl.minzoom, maxzoom: lvl.maxzoom,
     layout: {
       'text-field': ['get', 'name'],
       'text-font': ['Open Sans Regular'],
@@ -88,7 +88,6 @@ function labelLayer(lvl, t) {
 function hoverLabelLayer(lvl, t) {
   return {
     id: `${lvl.id}-label-hover`, type: 'symbol', source: `${lvl.id}-pts`,
-    minzoom: lvl.minzoom, maxzoom: lvl.maxzoom,
     filter: ['==', ['id'], -1], // ничего, пока не наведено
     layout: {
       'text-field': ['get', 'name'],
@@ -114,6 +113,22 @@ function addDataLayers() {
   }
   // события вешаем один раз: addDataLayers вызывается на каждый style.load (в т.ч. при смене темы)
   if (!eventsWired) { wireHover(); wireClick(); eventsWired = true; }
+  setActiveLevel(activeLevel);
+}
+
+function setActiveLevel(id) {
+  activeLevel = id;
+  for (const lvl of LEVELS) {
+    const vis = lvl.id === id ? 'visible' : 'none';
+    for (const suffix of ['fill', 'line', 'label', 'label-hover']) {
+      map.setLayoutProperty(`${lvl.id}-${suffix}`, 'visibility', vis);
+    }
+  }
+  clearHover(); // подсветка не должна «зависать» на скрытом слое
+  for (const btn of document.querySelectorAll('#level-toggle button')) {
+    btn.classList.toggle('active', btn.dataset.level === id);
+  }
+  updateZoomIndicator();
 }
 
 function flyToBbox(bbox) {
@@ -201,9 +216,8 @@ map.addControl(new maplibregl.NavigationControl(), 'bottom-left');
 // Индикатор зума (для отладки порогов уровней)
 function updateZoomIndicator() {
   const z = map.getZoom();
-  const lvl = LEVELS.find((l) => z >= l.minzoom && z < l.maxzoom);
   document.getElementById('zoom-indicator').textContent =
-    `z ${z.toFixed(2)} · ${lvl ? lvl.id : '—'}`;
+    `z ${z.toFixed(2)} · ${levelLabel(activeLevel)}`;
 }
 map.on('zoom', updateZoomIndicator);
 map.on('load', updateZoomIndicator);
@@ -237,6 +251,12 @@ function wireSearch() {
   });
 }
 
+function wireLevelToggle() {
+  for (const btn of document.querySelectorAll('#level-toggle button')) {
+    btn.addEventListener('click', () => setActiveLevel(btn.dataset.level));
+  }
+}
+
 function buildLegend() {
   const list = document.getElementById('legend-list');
   // slug → name из секторов
@@ -253,6 +273,7 @@ async function init() {
   searchIndex = buildSearchIndex(data);
   buildLegend();
   wireSearch();
+  wireLevelToggle();
   await applyStyle();
 }
 
