@@ -237,6 +237,7 @@ function wireSearch() {
       li.addEventListener('click', () => {
         const r = results[i];
         const bbox = typeof r.bbox === 'string' ? JSON.parse(r.bbox) : r.bbox;
+        setActiveLevel(r.source); // переключаем уровень на уровень результата
         flyToBbox(bbox);
         setHover(r.source, r.id); // временная подсветка выбранного (та же механика, что и hover)
         input.value = r.name;
